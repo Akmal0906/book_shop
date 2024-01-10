@@ -28,6 +28,7 @@ abstract class AllText {
   static const String or='Or';
   static const String haveAccount='if you have an account?';
   static const String haveNotAccount='Do not have you an account?';
+  static const String didNotReg='you are not registered yet';
 
 }
 

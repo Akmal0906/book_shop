@@ -26,7 +26,7 @@ class _AccountScreenState extends State<AccountScreen> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
-                child: Text(AllText.didNotHave, style: customStyle,),
+                child: Text(AllText.didNotReg, style: customStyle,),
               );
             } else if (snapshot.hasData) {
 
