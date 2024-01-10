@@ -72,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen>
           if (state is CategoryInitial) {
             return Container(
               alignment: Alignment.center,
-              child: const Text('Initial State'),
+              child: Text(AllText.pleaseWait,style: customStyle,),
             );
           } else if (state is CategoryLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is CategoryLoaded) {
-            print('CategoryLoaded ISHLAVOTTI $count');
+
             return TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: tabController,

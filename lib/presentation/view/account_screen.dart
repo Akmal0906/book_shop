@@ -26,7 +26,7 @@ class _AccountScreenState extends State<AccountScreen> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
-                child: Text('Do not exist data', style: customStyle,),
+                child: Text(AllText.didNotHave, style: customStyle,),
               );
             } else if (snapshot.hasData) {
 
@@ -104,8 +104,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               );
             }
-            return const Center(
-              child: Text('Went wrong'),
+            return Center(
+              child: Text(AllText.wentWrong,style: customStyle,),
             );
           }
       ),

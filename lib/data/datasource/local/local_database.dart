@@ -35,25 +35,25 @@ class LocalDatabase {
 
   Future addDataLocally(SignUserModel model) async {
     final db = await database;
-    await db.insert('LocalData',model.toJson()
+    await db.insert('LocalData', model.toJson());
 
-    );
-   
     return 'Added';
   }
+
   Future readAllData() async {
     final db = await database;
     final allData = await db.query('LocalData');
     wholeDataList = allData;
-    var model= SignUserModel.fromJson(wholeDataList.first);
+    var model = SignUserModel.fromJson(wholeDataList.first);
     return allData;
   }
 
-  Future updateData(  SignUserModel model) async {
+  Future updateData(SignUserModel model) async {
     final db = await database;
     // int dbupdateId=await db.rawUpdate('UPDATE LocalData SET Name= ? WHERE id=?',[Name,id]);
-    int dbupdateId = await db
-        .rawUpdate('UPDATE LocalData SET Token=? WHERE Name=?',model.toString());
+    int dbupdateId = await db.rawUpdate(
+        'UPDATE LocalData SET username=? SET password1=? SET=password2=? SET=WHERE id=?',
+        model.toString());
   }
 
   Future deleteData(int id) async {
@@ -71,20 +71,14 @@ class LocalDatabase {
     final db = await database;
     final res =
         await db.rawQuery("SELECT * FROM LocalData WHERE Name=?", [name]);
-
-
   }
 
   Future<bool> hasToken() async {
     final db = await database;
     final res = await db.rawQuery('SELECT Token FROM LocalData');
     if (res.isEmpty) {
-
-
       return false;
     } else {
-
-
       return true;
     }
   }

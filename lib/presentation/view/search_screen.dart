@@ -1,5 +1,3 @@
-import 'package:book_shop/data/network/api.dart';
-import 'package:book_shop/presentation/blocs/categories_blocs/category_bloc.dart';
 import 'package:book_shop/presentation/blocs/categories_blocs/category_bloc.dart';
 import 'package:book_shop/presentation/widgets/category_item_widget.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
@@ -41,7 +39,6 @@ class _SearchScreenState extends State<SearchScreen> {
               onChanged: (value) {
                 context.read<CategoryBloc>().add(TakeSearchItemEvent(value));
 
-                print(value);
               },
               controller: controller,
               focusNode: FocusNode(debugLabel: 'Hello'),

@@ -10,7 +10,6 @@ import '../blocs/register/register_bloc.dart';
 import '../view/combain_screen.dart';
 import '../widgets/buttun_widget.dart';
 import '../widgets/mytextfield_widget.dart';
-import '../widgets/signIn_button_widget.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -33,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
           controller: userNameController,
           isNeed: false,
           hintText: AllText.userName,
-          obscureText: true),
+          obscureText: false),
       TextFieldModel(
           controller: passwordController,
           isNeed: true,
@@ -53,54 +52,43 @@ class _SignInScreenState extends State<SignInScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: Colors.grey.shade100,
           centerTitle: true,
           title: const Text(AllText.apbar),
         ),
-        body: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 18,
+                ),
+                Text(
+                  AllText.enterPassUser,
+                  style: customStyle,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MyTextFieldWidget(model: list[index]);
+                    }),
+              ],
+            ),
+
+            Expanded(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Text(
-                    AllText.enterPassUser,
-                    style: customStyle,
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MyTextFieldWidget(model: list[index]);
-                      }),
-                ],
-              ),
-              const SizedBox(
-                height: 318,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // const SignButtonWidget(
-                  //     text: AllText.google, image: 'assets/icons/google.svg'),
-                  // const SizedBox(height: 12,),
-                  // const SignButtonWidget(
-                  //     text: AllText.facebook,
-                  //     image: 'assets/icons/facebook.svg'),
-                  const SizedBox(
-                    height: 18,
-                  ),
                   Stack(
                     children: [
                       ButtonWidget(onTap: directFunc, text: AllText.signIn),
@@ -126,14 +114,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                           const CombainScreen()),
                                   (Route<dynamic> route) => false);
                             });
-
+              
                             toastMessage(state.success);
                           }
-                          return Center(
-                              child: Text(
-                            'HALI ISHLMADI',
-                            style: customStyle,
-                          ));
+                          return const SizedBox.shrink();
                         },
                         listener: (BuildContext context, Object? state) {},
                       )
@@ -146,7 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Dont have you an account?',
+                        AllText.haveNotAccount,
                         style: customStyle,
                       ),
                       TextButton(
@@ -178,15 +162,16 @@ class _SignInScreenState extends State<SignInScreen> {
                                 builder: (context) => const SignUpScreen()));
                           },
                           child: Text(
-                            'Sign Up',
+                            AllText.signUp,
                             style: customStyle.copyWith(color: Colors.white),
                           ))
                     ],
                   )
                 ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 32,),
+          ],
         ),
       ),
     );

@@ -20,6 +20,14 @@ abstract class AllText {
   static const String logOut='Log out';
   static const String searchTitle='Write the title of the book';
   static const String searchState='not yet searched';
+  static const String wentWrong='Went Wrong';
+  static const String didNotHave='Do not exist data';
+  static const String pleaseWait='Please waiting';
+  static const String didNotAdd='not yet added';
+  static const String signSuccess='you are successully registered';
+  static const String or='Or';
+  static const String haveAccount='if you have an account?';
+  static const String haveNotAccount='Do not have you an account?';
 
 }
 

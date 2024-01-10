@@ -1,10 +1,8 @@
-import 'package:book_shop/domain/models/categories_item/item_list_model.dart';
 import 'package:book_shop/domain/models/textfield_models/sign_user_model.dart';
 import 'package:book_shop/domain/models/textfield_models/textfield_model.dart';
 import 'package:book_shop/presentation/registrs/sign_in_screen.dart';
 import 'package:book_shop/presentation/view/combain_screen.dart';
 import 'package:book_shop/presentation/widgets/buttun_widget.dart';
-import 'package:book_shop/presentation/widgets/item_description_widget.dart';
 import 'package:book_shop/presentation/widgets/mytextfield_widget.dart';
 import 'package:book_shop/presentation/widgets/signIn_button_widget.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
@@ -38,12 +36,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           controller: userNameController,
           isNeed: false,
           hintText: AllText.userName,
-          obscureText: true),
+          obscureText: false),
       TextFieldModel(
           controller: emailController,
           isNeed: false,
           hintText: AllText.email,
-          obscureText: true),
+          obscureText: false),
       TextFieldModel(
           controller: password1Controller,
           isNeed: true,
@@ -64,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (password1Controller.text.trim() == password2Controller.text.trim() &&
         password1Controller.text.length > 8 &&
         nomericRex.hasMatch(password1Controller.text.trim()) == true) {
-      print('PASSWORD VALID');
+
       SignUserModel model = SignUserModel(
           username: userNameController.text,
           email: emailController.text,
@@ -72,9 +70,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password2: password2Controller.text.trim());
       context.read<RegisterBloc>().add(RegisterSubmitted(model: model));
     } else {
-      toastMessage('Someting went wrong');
-      print(
-          'WORKING DIR==${nomericRex.hasMatch(password1Controller.text.trim())}');
+      toastMessage(AllText.wentWrong);
+
     }
   }
 
@@ -104,8 +101,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AllText.createAccount,
                     style: customStyle,
                   ),
-                  const SizedBox(
-                    height: 12,
+                   SizedBox(
+                    height: MediaQuery.of(context).size.height*0.05,
                   ),
                   ListView.builder(
                       shrinkWrap: true,
@@ -117,6 +114,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 18,
                   ),
+
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
                   Stack(
                     children: [
                       ButtonWidget(onTap: directFunc, text: AllText.signUp),
@@ -138,16 +141,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }else if (state is RegisterSuccessState) {
                             WidgetsBinding.instance.addPostFrameCallback((_) {
                               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                                  const CombainScreen()), (Route<dynamic> route) => false);
+                              const CombainScreen()), (Route<dynamic> route) => false);
                             });
 
-                            toastMessage(state.success);
+                            toastMessage(AllText.signSuccess);
                           }
-                          return Center(
-                              child: Text(
-                            'HALI ISHLMADI',
-                            style: customStyle,
-                          ));
+                          return const SizedBox.shrink();
                         },
                         listener: (BuildContext context, Object? state) {},
                       )
@@ -160,47 +159,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         const Expanded(
                             child: Divider(
-                          thickness: 1,
-                          indent: 2,
-                        )),
+                              thickness: 1,
+                              indent: 2,
+                            )),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
-                            'Or',
+                            AllText.or,
                             style: customStyle,
                           ),
                         ),
                         const Expanded(
                             child: Divider(
-                          thickness: 1,
-                        ))
+                              thickness: 1,
+                            ))
                       ],
                     ),
                   ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const SignButtonWidget(
-                      text: AllText.google, image: 'assets/icons/google.svg'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const SignButtonWidget(
-                      text: AllText.facebook,
-                      image: 'assets/icons/facebook.svg'),
-                  const SizedBox(
-                    height: 22,
-                  ),
+                  const SizedBox(height: 32,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'if you have an account?',
+                        AllText.haveAccount,
                         style: customStyle,
                       ),
                       TextButton(
@@ -232,11 +213,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 builder: (context) => const SignInScreen()));
                           },
                           child: Text(
-                            'Sign In',
+                            AllText.signIn,
                             style: customStyle.copyWith(color: Colors.white),
                           ))
                     ],
-                  )
+                  ),
+                  const SizedBox(height: 12,),
                 ],
               ),
             ],

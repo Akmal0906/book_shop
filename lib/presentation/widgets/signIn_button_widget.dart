@@ -25,7 +25,7 @@ class SignButtonWidget extends StatelessWidget {
         ),
         trailing:SvgPicture.asset(image,fit: BoxFit.cover,height: 5,width: 5,),
         onTap: (){
-          print('dsfg');
+
         },
       ),
     );
