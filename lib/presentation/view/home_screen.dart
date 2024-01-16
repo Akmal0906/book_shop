@@ -1,5 +1,5 @@
-import 'package:book_shop/data/datasource/local/local_database.dart';
 import 'package:book_shop/presentation/blocs/categories_blocs/category_bloc.dart';
+import 'package:book_shop/presentation/view/drawer_screen.dart';
 import 'package:book_shop/presentation/widgets/item_description_widget.dart';
 import 'package:book_shop/utils/constanst/All_color.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
@@ -39,16 +39,7 @@ class _HomeScreenState extends State<HomeScreen>
           AllText.apbar,
           style: style.copyWith(fontWeight: FontWeight.bold),
         ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: AllColors.primaryWhite,
-          ),
-          onPressed: () {},
-        ),
-        actions: [
 
-        ],
         bottom: TabBar(
             onTap: (index) {
               count = index;
@@ -67,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen>
                 )
                 .toList()),
       ),
+      drawer: DrawerScreen(),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state is CategoryInitial) {

@@ -23,6 +23,7 @@ class FetchData {
   final dio = Dio();
 
   Future<DataState> fetchItemModel({int id = 0}) async {
+    print('IDDDDDDDDDDDDDDDDDDDDDDDDD==$id');
     List<CateItemModel> res = [];
     try {
       final response =
@@ -37,12 +38,10 @@ class FetchData {
         res = jsonResponse.map((e) => CateItemModel.fromJson(e)).toList();
         return DataSuccess(res);
       } else {
-
         throw DioException(
             requestOptions: response.requestOptions, response: response);
       }
     } on DioException catch (e) {
-
       return DataFailed(e);
     }
   }
@@ -89,10 +88,11 @@ class FetchData {
 
   Future<DataState> getToken(SignUserModel model) async {
     try {
-      final response = await dio
-          .post(AllBasesUrl.baseUrl + tokenUrl, data: {'username': model.username});
-      if (response.statusCode==201||response.statusCode==200) {
-        await LocalDatabase().addDataLocally(model.copyWith(token: response.data['access']));
+      final response = await dio.post(AllBasesUrl.baseUrl + tokenUrl,
+          data: {'username': model.username});
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        await LocalDatabase()
+            .addDataLocally(model.copyWith(token: response.data['access']));
 
         return DataSuccess(response.data['access']);
       } else if (response.statusCode == 404) {
@@ -105,6 +105,4 @@ class FetchData {
       return DataFailed(e);
     }
   }
-
-
 }

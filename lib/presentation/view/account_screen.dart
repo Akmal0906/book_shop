@@ -13,23 +13,23 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: FutureBuilder(future: LocalDatabase().readAllData(),
+      body: FutureBuilder(
+          future: LocalDatabase().readAllData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
-                child: Text(AllText.didNotReg, style: customStyle,),
+                child: Text(
+                  AllText.didNotReg,
+                  style: customStyle,
+                ),
               );
             } else if (snapshot.hasData) {
-
               return Stack(
                 // alignment: Alignment.topCenter,
                 fit: StackFit.loose,
@@ -50,27 +50,39 @@ class _AccountScreenState extends State<AccountScreen> {
                   Positioned(
                     right: 28,
                     top: 26,
-                    child: PopupMenuButton(itemBuilder: (context) =>
-                    [
-                      PopupMenuItem(value: AllText.logOut,child: Text(AllText.logOut, style: customStyle,),),
-                      PopupMenuItem(value: AllText.logIn,child: Text(AllText.logIn,style: customStyle,),)
-
-                    ],iconSize: 26,
+                    child: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: AllText.logOut,
+                          child: Text(
+                            AllText.logOut,
+                            style: customStyle,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: AllText.logIn,
+                          child: Text(
+                            AllText.logIn,
+                            style: customStyle,
+                          ),
+                        )
+                      ],
+                      iconSize: 26,
                       iconColor: Colors.white,
-                      onSelected: (String str) async{
-                        if (str ==AllText.logOut) {
+                      onSelected: (String str) async {
+                        if (str == AllText.logOut) {
                           await LocalDatabase().clearAllData();
                           if (context.mounted) {
                             Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(builder: (
-                                  context) => const SignUpScreen()), (
-                              route) => false);
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUpScreen()),
+                                (route) => false);
                           }
-                        } else if (str ==AllText.logIn) {
+                        } else if (str == AllText.logIn) {
                           Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(builder: (
-                                  context) => const SignInScreen()), (
-                              route) => false);
+                              MaterialPageRoute(
+                                  builder: (context) => const SignInScreen()),
+                              (route) => false);
                         }
                       },
                     ),
@@ -95,21 +107,22 @@ class _AccountScreenState extends State<AccountScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: 4,
                         itemBuilder: (BuildContext context, int index) {
-                          return ProfileInfoWidget(text: snapshot
-                              .data[0][signUserList[index]],
-                            text2: signUserList[index],);
+                          return ProfileInfoWidget(
+                            text: snapshot.data[0][signUserList[index]],
+                            text2: signUserList[index],
+                          );
                         }),
                   ),
-
                 ],
               );
             }
             return Center(
-              child: Text(AllText.wentWrong,style: customStyle,),
+              child: Text(
+                AllText.wentWrong,
+                style: customStyle,
+              ),
             );
-          }
-      ),
-
+          }),
     );
   }
 }

@@ -3,9 +3,6 @@ import 'package:book_shop/data/network/api.dart';
 import 'package:book_shop/utils/resource/data_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
-import '../../../domain/models/categories/categories_model.dart';
 import '../../../domain/models/categories_item/categories_item_model.dart';
 
 part 'category_event.dart';
@@ -77,7 +74,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   try{
 
   }catch(e){
-     emit(ErrorState('dfgdfg'));
+     emit(ErrorState('Error'));
   }
 
 }
