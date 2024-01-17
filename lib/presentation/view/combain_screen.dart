@@ -30,6 +30,7 @@ class _CombainScreenState extends State<CombainScreen> {
       context.read<CategoryBloc>().add(const TakeCategoryItemEvent(0));
     }
     return Scaffold(
+      extendBody: true,
       body: list[currentIndex],
       bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20)),

@@ -4,6 +4,9 @@ import 'package:book_shop/presentation/registrs/sign_up_screen.dart';
 import 'package:book_shop/presentation/widgets/profile_info_widget.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/register/register_bloc.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -70,19 +73,33 @@ class _AccountScreenState extends State<AccountScreen> {
                       iconSize: 26,
                       iconColor: Colors.white,
                       onSelected: (String str) async {
-                        if (str == AllText.logOut) {
-                          await LocalDatabase().clearAllData();
+                        await LocalDatabase().clearAllData();
+
+                        if (str.trim()==AllText.logOut.trim()) {
+                          print('SELECTED ONE $str');
+
                           if (context.mounted) {
+                            context.read<RegisterBloc>().add(RegisterInitial());
+
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (context) => const SignUpScreen()),
                                 (route) => false);
                           }
-                        } else if (str == AllText.logIn) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const SignInScreen()),
-                              (route) => false);
+                        } else if (str.trim()==AllText.logIn.trim()) {
+                          print('SELECTED two $str');
+                          if(context.mounted){
+                            context.read<RegisterBloc>().add(RegisterInitial());
+
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const SignInScreen()),
+                                    (route) => false)
+                            ;
+                          }
+
+
                         }
                       },
                     ),

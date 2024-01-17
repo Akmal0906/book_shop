@@ -17,13 +17,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         transformer: debounceSequential(const Duration(seconds: 1)));
   }
 
-
   void _takeCategoryItem(
       TakeCategoryItemEvent event, Emitter<CategoryState> emit) async {
     try {
       emit(CategoryLoading());
       final FetchData fetchData = FetchData();
       final list = await fetchData.fetchItemModel(id: event.id);
+      print('RUN TYPE==${list.runtimeType}');
+      print('DATA CATEGORY BLOC==${list.data}');
       switch (list.runtimeType) {
         case const (DataSuccess):
           emit(CategoryLoaded(list.data));
@@ -69,15 +70,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     }
   }
 }
- _takeBook(TakeBookEvent event,Emitter<CategoryState> emit)async*{
+
+_takeBook(TakeBookEvent event, Emitter<CategoryState> emit) async* {
   emit(CategoryLoading());
-  try{
-
-  }catch(e){
-     emit(ErrorState('Error'));
+  try {} catch (e) {
+    emit(ErrorState('Error'));
   }
-
 }
+
 EventTransformer<Event> debounceSequential<Event>(Duration duration) {
   print('debounceSequential TIME $duration');
   return (events, mapper) => events.debounceTime(duration).asyncExpand(mapper);

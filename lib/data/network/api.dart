@@ -1,5 +1,6 @@
 import 'package:book_shop/data/datasource/local/local_database.dart';
 import 'package:book_shop/domain/models/textfield_models/sign_user_model.dart';
+import 'package:book_shop/utils/constanst/All_text.dart';
 import 'package:book_shop/utils/constanst/all_bases_url.dart';
 import 'package:book_shop/utils/resource/data_state.dart';
 import 'package:dio/dio.dart';
@@ -23,11 +24,10 @@ class FetchData {
   final dio = Dio();
 
   Future<DataState> fetchItemModel({int id = 0}) async {
-    print('IDDDDDDDDDDDDDDDDDDDDDDDDD==$id');
     List<CateItemModel> res = [];
     try {
       final response =
-          await dio.get(id == 0 ? firstlyTabUrl : '$categoriesData$id/');
+          await dio.get(id == 0||id==3 ? listUrl[id] : '$categoriesData$id/');
 
       if (response.statusCode == 200) {
         final List jsonResponse;

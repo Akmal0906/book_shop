@@ -44,6 +44,11 @@ List<Icon> listIcon = [
   const Icon(Icons.logout_rounded),
 ];
 
-List<String> listTitle=['Favorites','Friends','Free books','Log out'];
+List<String> listTitle = ['Favorites', 'Friends', 'Free books', 'Log out'];
 
-List<String> listUrl=['https://iambookish.pythonanywhere.com/book/lastbooks/',''];
+List<String> listUrl = [
+  'https://iambookish.pythonanywhere.com/book/lastbooks/',
+  '',
+  '',
+  'https://iambookish.pythonanywhere.com/book/all'
+];

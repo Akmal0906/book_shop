@@ -34,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
             child: TextField(
               onChanged: (value) {
                 context.read<CategoryBloc>().add(TakeSearchItemEvent(value));

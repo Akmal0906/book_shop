@@ -44,8 +44,9 @@ class LocalDatabase {
     final db = await database;
     final allData = await db.query('LocalData');
     wholeDataList = allData;
+    print('WHOLE DATA==$wholeDataList');
     var model = SignUserModel.fromJson(wholeDataList.first);
-    return allData;
+    return wholeDataList;
   }
 
   Future updateData(SignUserModel model) async {
@@ -67,11 +68,11 @@ class LocalDatabase {
     return 'All data cleared';
   }
 
-  Future checkData(String name) async {
-    final db = await database;
-    final res =
-        await db.rawQuery("SELECT * FROM LocalData WHERE Name=?", [name]);
-  }
+  // Future checkData(String name) async {
+  //   final db = await database;
+  //   final res =
+  //       await db.rawQuery("SELECT * FROM LocalData WHERE Name=?", [name]);
+  // }
 
   Future<bool> hasToken() async {
     final db = await database;

@@ -10,6 +10,8 @@ abstract class AllColors{
   static const Color buttonGrey=Color(0xff565656);
   static const Color textBackColor=Color(0xff15978F);
   static const Color textdescColor=Color(0xff6E6E6E);
+  static const Color freeItemColor=Color(0xff40D3D1D8);
+
 
 
 }

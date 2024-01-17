@@ -25,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController password1Controller = TextEditingController();
   final TextEditingController password2Controller = TextEditingController();
   List list = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -52,7 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           hintText: AllText.repPassword,
           obscureText: true),
     ];
-
   }
 
   void directFunc() {
@@ -61,7 +61,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (password1Controller.text.trim() == password2Controller.text.trim() &&
         password1Controller.text.length > 8 &&
         nomericRex.hasMatch(password1Controller.text.trim()) == true) {
-
       SignUserModel model = SignUserModel(
           username: userNameController.text,
           email: emailController.text,
@@ -70,14 +69,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       context.read<RegisterBloc>().add(RegisterSubmitted(model: model));
     } else {
       toastMessage(AllText.wentWrong);
-
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
+      key: _scaffoldKey,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade100,
@@ -100,8 +100,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AllText.createAccount,
                     style: customStyle,
                   ),
-                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.05,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   ListView.builder(
                       shrinkWrap: true,
@@ -113,7 +113,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 18,
                   ),
-
                 ],
               ),
               Column(
@@ -134,13 +133,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                           } else if (state is RegisterFailureState) {
                             toastMessage(state.message);
-
-                          } else if(state is RegisterInitialState){
+                          } else if (state is RegisterInitialState) {
                             return const SizedBox.shrink();
-                          }else if (state is RegisterSuccessState) {
+                          } else if (state is RegisterSuccessState) {
                             WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                              const CombainScreen()), (Route<dynamic> route) => false);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CombainScreen()),
+                                  (Route<dynamic> route) => false);
                             });
 
                             toastMessage(AllText.signSuccess);
@@ -158,9 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         const Expanded(
                             child: Divider(
-                              thickness: 1,
-                              indent: 2,
-                            )),
+                          thickness: 1,
+                          indent: 2,
+                        )),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
@@ -170,12 +171,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const Expanded(
                             child: Divider(
-                              thickness: 1,
-                            ))
+                          thickness: 1,
+                        ))
                       ],
                     ),
                   ),
-                  const SizedBox(height: 32,),
+                  const SizedBox(
+                    height: 32,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -217,7 +220,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ))
                     ],
                   ),
-                  const SizedBox(height: 12,),
+                  const SizedBox(
+                    height: 12,
+                  ),
                 ],
               ),
             ],

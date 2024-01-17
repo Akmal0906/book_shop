@@ -22,6 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
   late TextEditingController userNameController;
   final TextEditingController passwordController = TextEditingController();
   List list = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -52,6 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
@@ -114,7 +116,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                           const CombainScreen()),
                                   (Route<dynamic> route) => false);
                             });
-              
                             toastMessage(state.success);
                           }
                           return const SizedBox.shrink();
