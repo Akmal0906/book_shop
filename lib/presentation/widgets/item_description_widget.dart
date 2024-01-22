@@ -22,11 +22,14 @@ class ItemDescWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         clipBehavior: Clip.none,
+       // fit: StackFit.loose,
         children: [
-          SizedBox(
-            height: size.height,
+          Positioned(
+            top: 0,
+            height: size.height/3,
             width: size.width,
             child: CachedNetworkImage(
               imageUrl: AllBasesUrl.baseUrl + model.picture,
@@ -58,8 +61,8 @@ class ItemDescWidget extends StatelessWidget {
             width: size.width,
             height: size.height,
             child: Container(
-              padding: const EdgeInsets.only(
-                  left: 14, right: 14, top: 14, bottom: 11),
+              padding:
+                  const EdgeInsets.only(left: 7, right: 7, top: 24, bottom: 11),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -67,49 +70,59 @@ class ItemDescWidget extends StatelessWidget {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    model.title,
-                    style: customStyle.copyWith(
-                      fontSize: 24,
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                      width: 180,
-                      height: 32,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AllColors.buttonBackColor,
-                      ),
-                      child: Text(
-                        '${model.price}som',
-                        style: customStyle.copyWith(
-                            fontSize: 24,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xff15978F)),
-                      )),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        model.title,
+                        style: customStyle.copyWith(
+                          fontSize: 16,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Text(
                         model.author.first.name,
                         style: customStyle.copyWith(
-                            fontSize: 16,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w500,
                             color: AllColors.buttonGrey),
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AllColors.buttonBackColor,
+                          ),
+                          child: Text(
+                            '${model.price}\$',
+                            style: customStyle.copyWith(
+                                fontSize: 18,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xff15978F)),
+                          )),
+                      const SizedBox(
+                        height: 6,
                       ),
                       Text(
                         model.active ? AllText.have : AllText.haveNot,
@@ -121,25 +134,25 @@ class ItemDescWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.only(
-                        top: 13, bottom: 23, right: 29, left: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AllColors.textBackColor,
-                    ),
-                    child: Text(
-                      ' In Flutter, letterSpacing is a property of the TextStyle class that specifies the amount of space (in logical pixels) to add between each letter. It essentially controls the space between characters in a text string.',
-                      style: customStyle.copyWith(
-                          color: AllColors.textdescColor,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom:100,left: 24,
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(
+                  top: 13, bottom: 23, right: 29, left: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: AllColors.bacColor,
+              ),
+              child: Text(
+                model.description,
+                style: customStyle.copyWith(
+                    color: AllColors.textdescColor,
+                    fontWeight: FontWeight.w400),
               ),
             ),
           ),
@@ -150,7 +163,7 @@ class ItemDescWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       BlocProvider.of<BookBloc>(context).add(GetBookEvent(
                           url:
                               'https://iambookish.pythonanywhere.com${model.eVersion}'));
@@ -169,20 +182,15 @@ class ItemDescWidget extends StatelessWidget {
                       ),
                     )),
                 GestureDetector(
-                  onTap: () async{
-
+                  onTap: () async {
                     LocalDatabase().hasToken().then((value) {
-                      if(value==true){
-
-                      }else{
+                      if (value == true) {
+                      } else {
                         context.read<RegisterBloc>().add(RegisterInitial());
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()));
                       }
-
                     });
-
                   },
                   child: Container(
                     height: 27,

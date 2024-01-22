@@ -34,16 +34,13 @@ class _CombainScreenState extends State<CombainScreen> {
       body: list[currentIndex],
       bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20)),
-
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
           backgroundColor: AllColors.primary,
           selectedItemColor: Colors.red.shade400,
           unselectedItemColor: AllColors.primaryWhiteCha,
-        
           onTap: (current){
-
             setState(() {
               currentIndex=current;
             });

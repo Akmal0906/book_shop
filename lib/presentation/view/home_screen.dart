@@ -1,12 +1,12 @@
 import 'package:book_shop/data/datasource/local/local_database.dart';
 import 'package:book_shop/presentation/blocs/categories_blocs/category_bloc.dart';
 import 'package:book_shop/presentation/view/drawer_screen.dart';
+import 'package:book_shop/presentation/view/slider_screen.dart';
 import 'package:book_shop/presentation/widgets/item_description_widget.dart';
 import 'package:book_shop/utils/constanst/All_color.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../domain/models/textfield_models/sign_user_model.dart';
 import '../widgets/category_item_widget.dart';
 
@@ -21,13 +21,12 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
   String? name;
-   String? email;
+  String? email;
+
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: tabbarTexts.length, vsync: this);
-
-    print('HOME SCREEN WORKING');
   }
 
   TextStyle style = const TextStyle(color: Colors.white);
@@ -37,9 +36,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-
-    print('NAME==$name');
-    print('EMAIL==$email');
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AllColors.bacColor,
@@ -52,29 +49,26 @@ class _HomeScreenState extends State<HomeScreen>
           style: style.copyWith(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-            onPressed: () async {
+            onPressed: ()async{
               LocalDatabase().hasToken().then((value) {
-              if(value==true){
-                LocalDatabase().readAllData().then((value) {
-                  var model = SignUserModel.fromJson(value.first);
-                  name=model.username;
-                  email=model.email;
-                  setState(() {
-
+                if (value == true) {
+                  LocalDatabase().readAllData().then((value) {
+                    var model = SignUserModel.fromJson(value.first);
+                    name = model.username;
+                    email = model.email;
+                    setState(() {});
                   });
+                } else {
+                  setState(() {
+                    name = 'Unknown';
+                    email = 'default321@gmail.com';
+                    print(name.toString());
+                    print(email.toString());
+                  });
+                }
 
-                });
-              }else{
-                setState(() {
-                  name='Unknown';
-                  email='default321@gmail.com';
-
-                });
-              }
-
-              _scaffoldKey.currentState!.openDrawer();
+                _scaffoldKey.currentState!.openDrawer();
               });
-
             },
             icon: const Icon(
               Icons.menu,
@@ -99,11 +93,7 @@ class _HomeScreenState extends State<HomeScreen>
                 )
                 .toList()),
       ),
-      drawer: DrawerScreen(
-        name:  name??'',
-          email:  email??''
-
-      ),
+      drawer: DrawerScreen(name: name ?? '', email: email ?? ''),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           print('BLOC WORKING');
@@ -126,29 +116,41 @@ class _HomeScreenState extends State<HomeScreen>
                 children: List.generate(
                     tabbarTexts.length,
                     (index) => count == index
-                        ? GridView.builder(
+                        ? ListView(
                             scrollDirection: Axis.vertical,
-                            itemCount: state.cateItemList.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 1 / 1.9,
-                              crossAxisCount: 2,
-                            ),
-                            itemBuilder: (BuildContext context, int indexx) {
-                              return GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ItemDescWidget(
-                                                    model: state.cateItemList[
-                                                        indexx])));
-                                  },
-                                  child: CategoryItemWidget(
-                                    indexx: indexx,
-                                    list: state.cateItemList,
-                                  ));
-                            })
+                            shrinkWrap: true,
+                            children: [
+                              index == 0
+                                  ? const SliderScreen()
+                                  : const SizedBox.shrink(),
+                              GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.cateItemList.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 1 / 1.9,
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder:
+                                      (BuildContext context, int indexx) {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ItemDescWidget(
+                                                          model: state
+                                                                  .cateItemList[
+                                                              indexx])));
+                                        },
+                                        child: CategoryItemWidget(
+                                          indexx: indexx,
+                                          list: state.cateItemList,
+                                        ));
+                                  }),
+                            ],
+                          )
                         : const SizedBox.shrink()).toList());
           } else if (state is ErrorState) {
             return Center(
@@ -156,11 +158,16 @@ class _HomeScreenState extends State<HomeScreen>
             );
           }
 
-          return const Center(
-            child: Text('Bloc Ishlamadi'),
+          return Center(
+            child: Text(
+              AllText.pleaseWait,
+              style: customStyle,
+            ),
           );
         },
       ),
     );
   }
+
+
 }

@@ -39,9 +39,8 @@ class FreeBookScreen extends StatelessWidget {
                                     model: state.cateItemList[index])));
                           },
                           child: Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.all(8),
-                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.only(top: 9,left: 5,right: 7),
                             height: size.height / 6,
                             width: size.width,
                             decoration: BoxDecoration(
@@ -56,7 +55,7 @@ class FreeBookScreen extends StatelessWidget {
                                   ),
                                 ]),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CachedNetworkImage(
@@ -66,7 +65,6 @@ class FreeBookScreen extends StatelessWidget {
                                       Container(
                                     width: 100,
                                     height: 72,
-                                    padding: const EdgeInsets.all(22),
                                     decoration: ShapeDecoration(
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
@@ -83,8 +81,8 @@ class FreeBookScreen extends StatelessWidget {
                                       const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
                                       Container(
-                                    height: size.height / 2.5,
-                                    width: size.width,
+                                        width: 100,
+                                        height: 72,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
@@ -94,9 +92,8 @@ class FreeBookScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
+                                const SizedBox(width: 7,),
+
                                 Expanded(
                                   child: Row(
                                     crossAxisAlignment:
@@ -141,14 +138,10 @@ class FreeBookScreen extends StatelessWidget {
                                                 fontSize: 12),
                                             maxLines: 2,
                                           ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
+
                                         ],
                                       ),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
+
                                     ],
                                   ),
                                 )

@@ -3,6 +3,7 @@ import 'package:book_shop/data/datasource/local/local_database.dart';
 import 'package:book_shop/presentation/blocs/categories_blocs/category_bloc.dart';
 import 'package:book_shop/presentation/view/combain_screen.dart';
 import 'package:book_shop/presentation/view/free_book_screen.dart';
+import 'package:book_shop/presentation/widgets/authors_screen.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DrawerScreen extends StatelessWidget {
   final String name;
   final String email;
-   const DrawerScreen({super.key,required this.name,required this.email});
+
+  const DrawerScreen({super.key, required this.name, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +54,8 @@ class DrawerScreen extends StatelessWidget {
                   const EdgeInsets.only(left: 0),
                   const EdgeInsets.only(left: 12, top: 0),
                   1),
-              onTap: () async{
-                if (index == 2) {
+              onTap: () async {
+                if (index == 1) {
                   context
                       .read<CategoryBloc>()
                       .add(const TakeCategoryItemEvent(3));
@@ -64,14 +66,16 @@ class DrawerScreen extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const FreeBookScreen()));
                   });
-                }else if(index==listTitle.length-1){
+                } else if (index == listTitle.length - 1) {
                   await LocalDatabase().clearAllData();
-                  if(context.mounted){
-
-                      Navigator.pop(context,
-                          MaterialPageRoute(builder: (context) => const CombainScreen()));
-
+                  if (context.mounted) {
+                    Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CombainScreen()));
                   }
+                }else if(index==0){
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const AuthorsScreen()));
                 }
               },
               title: Text(

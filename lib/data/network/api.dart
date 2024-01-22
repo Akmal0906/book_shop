@@ -1,4 +1,5 @@
 import 'package:book_shop/data/datasource/local/local_database.dart';
+import 'package:book_shop/domain/models/authors/author_model.dart';
 import 'package:book_shop/domain/models/textfield_models/sign_user_model.dart';
 import 'package:book_shop/utils/constanst/All_text.dart';
 import 'package:book_shop/utils/constanst/all_bases_url.dart';
@@ -21,13 +22,19 @@ class FetchData {
   static const String signUpUrl =
       'https://iambookish.pythonanywhere.com/api/v1/dj-rest-auth/registration/';
   static const String tokenUrl = '/book/token/';
-  final dio = Dio();
+  static const String authorsUrl =
+      'https://iambookish.pythonanywhere.com/book/authors/all/';
+  final dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 2),
+    receiveTimeout: const Duration(seconds: 3),
+    responseType: ResponseType.json,
+  ));
 
   Future<DataState> fetchItemModel({int id = 0}) async {
     List<CateItemModel> res = [];
     try {
-      final response =
-          await dio.get(id == 0||id==3 ? listUrl[id] : '$categoriesData$id/');
+      final response = await dio
+          .get(id == 0 || id == 3 ? listUrl[id] : '$categoriesData$id/');
 
       if (response.statusCode == 200) {
         final List jsonResponse;
@@ -103,6 +110,26 @@ class FetchData {
       }
     } on DioException catch (e) {
       return DataFailed(e);
+    }
+  }
+
+  Future<List<AuthorModel>?> getAuthors() async {
+    try {
+      final response = await dio.get(authorsUrl);
+      print(response.statusCode);
+      print(response.data);
+      if (response.statusCode == 200) {
+        final List list = response.data;
+        final List<AuthorModel> authorsList =
+            list.map((e) => AuthorModel.fromJson(e)).toList();
+
+        print('AUTHORS==$authorsList');
+        return authorsList;
+      } else {
+        return null;
+      }
+    } on DioException catch (e) {
+      return null;
     }
   }
 }

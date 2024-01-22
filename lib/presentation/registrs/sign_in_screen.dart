@@ -86,7 +86,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     }),
               ],
             ),
-
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -116,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                           const CombainScreen()),
                                   (Route<dynamic> route) => false);
                             });
-                            toastMessage(state.success);
+                            toastMessage(AllText.signSuccess);
                           }
                           return const SizedBox.shrink();
                         },
@@ -171,7 +170,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 32,),
+            const SizedBox(
+              height: 32,
+            ),
           ],
         ),
       ),
